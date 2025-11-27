@@ -7,9 +7,30 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
 
 call plug#end()
 
+" Ctrl+s pour sauvegarder en mode normal
+nnoremap <silent> <C-s> :w<CR>
+
+" Ctrl+s pour sauvegarder en mode insertion
+inoremap <silent> <C-s> <Esc>:w<CR>a
+
 " Telescope keymaps
 lua << EOF
 local builtin = require('telescope.builtin')
+
+require('telescope').setup{
+  defaults = {
+    layout_config = {
+      horizontal = {
+        preview_width = 0.5,  -- rétrécit la preview
+      },
+      vertical = {
+        preview_height = 0.5, -- rétrécit la preview
+      },
+      width = 0.85,           -- largeur de la fenêtre Telescope
+      height = 0.85,          -- hauteur
+    },
+  }
+}
 
 vim.keymap.set('n', '<C-p>', function()
   local ok = pcall(builtin.git_files, { show_untracked = true })
@@ -20,3 +41,8 @@ end, { desc = 'Find files (git or all)' })
 EOF
 
 set clipboard=unnamedplus
+set number
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set smartindent
