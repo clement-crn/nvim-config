@@ -32,12 +32,19 @@ require('telescope').setup{
   }
 }
 
+-- Ctrl+p for telescope 
 vim.keymap.set('n', '<C-p>', function()
   local ok = pcall(builtin.git_files, { show_untracked = true })
   if not ok then
     builtin.find_files()
   end
 end, { desc = 'Find files (git or all)' })
+
+-- Ctrl+Shift+F for live_grep
+vim.keymap.set('n', '<C-S-f>', function()
+  builtin.live_grep()
+end, { desc = 'Live grep search' })
+
 EOF
 
 set clipboard=unnamedplus
